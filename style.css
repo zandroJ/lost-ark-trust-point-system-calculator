@@ -327,13 +327,13 @@
             background: rgba(58, 80, 107, 0.4);
         }
         
-        footer {
+/*         footer {
             text-align: center;
             margin-top: 40px;
             padding: 20px;
             color: #c3cfe2;
             font-size: 0.9rem;
-        }
+        } */
         
         .system-message {
             background: rgba(28, 37, 65, 0.8);
@@ -368,3 +368,4 @@
             font-size: 0.8rem;
             color: #c3cfe2;
         }
+
