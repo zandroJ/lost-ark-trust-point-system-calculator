@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lost Ark - Trust Point System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+   
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <i class="fas fa-shield-alt fa-3x" style="color: #5bc0be;"></i>
+                <h1>Trust Point System</h1>
+            </div>
+            <p class="subtitle">Earn trust through gold-consuming activities to reduce transaction fees and enable player trading</p>
+        </header>
+        
+        <div class="system-message">
+            <div class="message-header">
+                <i class="fas fa-exclamation-circle"></i>
+                <h3>System Announcement</h3>
+            </div>
+            <p>The Trust Point system has been implemented to combat RMT (Real Money Trading) while ensuring average player behavior is not heavily impacted.</p>
+        </div>
+        
+        <div class="main-content">
+            <div class="card">
+                <h2 class="card-title"><i class="fas fa-user-shield"></i> Your Trust Status</h2>
+                
+                <div class="user-stats">
+                    <div class="stat">
+                        <div class="stat-label">Current Trust Points</div>
+                        <div class="stat-value" id="current-trust">12,450</div>
+                        <div class="stat-label">Account-wide</div>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-label">Trust Tier</div>
+                        <div class="stat-value" id="tier-value">Silver</div>
+                        <div class="stat-label">Next: <span id="next-tier">Gold (20,000 TP)</span></div>
+                    </div>
+                </div>
+                
+                <div class="progress-container">
+                    <div class="progress-label">
+                        <span>Trust Level</span>
+                        <span id="trust-percentage">24.5%</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progress-fill" style="width: 24.5%"></div>
+                    </div>
+                    <div class="tier-markers">
+                        <div class="tier-marker" style="left: 0%"></div>
+                        <div class="tier-marker" style="left: 10%"></div>
+                        <div class="tier-marker" style="left: 50%"></div>
+                        <div class="tier-marker" style="left: 100%"></div>
+                        <div class="tier-marker-label" style="left: 0%">Bronze</div>
+                        <div class="tier-marker-label" style="left: 10%">Silver</div>
+                        <div class="tier-marker-label" style="left: 50%">Gold</div>
+                        <div class="tier-marker-label" style="left: 100%">Platinum</div>
+                    </div>
+                </div>
+                
+                <div class="info-box">
+                    <p><i class="fas fa-info-circle"></i> Your trust level determines transaction fees and trading limits. Higher trust means lower fees.</p>
+                </div>
+                
+                <h3 class="card-title"><i class="fas fa-coins"></i> Gold Trading</h3>
+                
+                <table class="penalty-table">
+                    <thead>
+                        <tr>
+                            <th>Transaction Type</th>
+                            <th>Base Fee</th>
+                            <th>Your Fee</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Mail with Gold</td>
+                            <td>5%</td>
+                            <td id="mail-fee">3%</td>
+                        </tr>
+                        <tr>
+                            <td>Personal Trade</td>
+                            <td>5%</td>
+                            <td id="trade-fee">3%</td>
+                        </tr>
+                        <tr>
+                            <td>Payment Request</td>
+                            <td>5%</td>
+                            <td id="request-fee">3%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="card">
+                <h2 class="card-title"><i class="fas fa-calculator"></i> Trust Calculator</h2>
+                
+                <div class="calculator">
+                    <div class="form-group">
+                        <label for="trust-points">Your Trust Points</label>
+                        <input type="number" id="trust-points" placeholder="Enter your trust points" value="12450">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="gold-amount">Gold Amount to Send</label>
+                        <input type="number" id="gold-amount" placeholder="Enter gold amount" value="5000">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="transaction-type">Transaction Type</label>
+                        <select id="transaction-type">
+                            <option value="mail">Mail with Gold</option>
+                            <option value="trade">Personal Trade</option>
+                            <option value="request">Payment Request</option>
+                        </select>
+                    </div>
+                    
+                    <button class="btn" onclick="calculateTrust()">
+                        <i class="fas fa-calculator"></i> Calculate Requirements
+                    </button>
+                    
+                    <div class="result">
+                        <h3>Transaction Details</h3>
+                        <div class="calculation-details">
+                            <div class="detail-row">
+                                <span>Gold to send:</span>
+                                <span id="display-gold">5,000</span>
+                            </div>
+                            <div class="detail-row">
+                                <span>Your trust points:</span>
+                                <span id="display-trust">12,450</span>
+                            </div>
+                            <div class="detail-row">
+                                <span>Base fee (5%):</span>
+                                <span id="base-fee">250 gold</span>
+                            </div>
+                            <div class="detail-row">
+                                <span>Trust coverage:</span>
+                                <span id="trust-coverage" class="success">Full coverage (no penalty)</span>
+                            </div>
+                            <div class="detail-row">
+                                <span>Additional fee:</span>
+                                <span id="additional-fee">0 gold</span>
+                            </div>
+                            <div class="detail-row">
+                                <span>Your fee (3%):</span>
+                                <span id="your-fee">150 gold</span>
+                            </div>
+                        </div>
+                        <div class="result-value" id="total-cost">Total cost: 5,150 gold</div>
+                    </div>
+                </div>
+                
+                <div class="info-box">
+                    <p><i class="fas fa-exclamation-triangle"></i> If you don't have enough Trust Points, an additional 25% fee will be applied to the untrusted amount.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h2 class="card-title"><i class="fas fa-medal"></i> Earning Trust Points</h2>
+            
+            <p>Trust is earned by consuming gold in various growth activities:</p>
+            
+            <ul class="activity-list">
+                <li class="activity-item">
+                    <div class="activity-name">
+                        <i class="fas fa-hammer"></i>
+                        <span>Gear honing (normal/advanced)</span>
+                    </div>
+                    <span class="trust-value">1:1 (normal gold)</span>
+                </li>
+                <li class="activity-item">
+                    <div class="activity-name">
+                        <i class="fas fa-gem"></i>
+                        <span>Quality upgrade</span>
+                    </div>
+                    <span class="trust-value">1:1 (normal gold)</span>
+                </li>
+                <li class="activity-item">
+                    <div class="activity-name">
+                        <i class="fas fa-shield-alt"></i>
+                        <span>Accessory refinement</span>
+                    </div>
+                    <span class="trust-value">1:1 (normal gold)</span>
+                </li>
+                <li class="activity-item">
+                    <div class="activity-name">
+                        <i class="fas fa-fire"></i>
+                        <span>Elixir crafting/refining</span>
+                    </div>
+                    <span class="trust-value">1:1 (normal gold)</span>
+                </li>
+                <li class="activity-item">
+                    <div class="activity-name">
+                        <i class="fas fa-crown"></i>
+                        <span>Karma unlock, level/rank growth</span>
+                    </div>
+                    <span class="trust-value">1:1 (normal gold)</span>
+                </li>
+                <li class="activity-item">
+                    <div class="activity-name">
+                        <i class="fas fa-hat-wizard"></i>
+                        <span>Transcendence unlock/purify</span>
+                    </div>
+                    <span class="trust-value">1:1 (normal gold)</span>
+                </li>
+            </ul>
+            
+            <div class="info-box">
+                <p><i class="fas fa-info-circle"></i> 1 normal gold used = +1 trust | 1 Roster bound gold used = +0.1 trust | 1 Character bound gold used = +0.1 trust</p>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h2 class="card-title"><i class="fas fa-exclamation-circle"></i> Trust Deductions</h2>
+            
+            <p>Trust decreases when trading gold with other players:</p>
+            
+            <table class="penalty-table">
+                <thead>
+                    <tr>
+                        <th>Action</th>
+                        <th>Trust Deduction</th>
+                        <th>Additional Fee if Untrusted</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Gold-attached mail</td>
+                        <td>Equal to gold sent</td>
+                        <td>25% of missing trust</td>
+                    </tr>
+                    <tr>
+                        <td>Payment request</td>
+                        <td>Equal to gold requested</td>
+                        <td>25% of missing trust</td>
+                    </tr>
+                    <tr>
+                        <td>Personal gold transfer</td>
+                        <td>Equal to gold sent</td>
+                        <td>25% of missing trust</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="info-box">
+                <p><i class="fas fa-lightbulb"></i> Example: With 1,000 Trust, when sending 5,000 gold, 4,000 gold without Trust will have an additional 1,000 gold fee (25% of 4,000).</p>
+            </div>
+        </div>
+        
+        <footer>
+            <p>Lost Ark Trust Point System | Designed to combat RMT while protecting legitimate players</p>
+            <p>© 2023 Smilegate RPG</p>
+        </footer>
+    </div>
+
+<script src="script.js"></script>
+</body>
+</html>
